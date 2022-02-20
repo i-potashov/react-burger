@@ -1,0 +1,7 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    font-family: "Jet Brains Mono", Arial, sans-serif;
+    flex: 0 1 50%;
+    max-width: 600px;
+}

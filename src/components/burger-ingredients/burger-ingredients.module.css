@@ -1,0 +1,98 @@
+/* полоса прокрутки */
+::-webkit-scrollbar {
+    width: 8px;
+    background-color: #131316;
+}
+
+/* ползунок скроллбара */
+::-webkit-scrollbar-thumb {
+    height: calc(100vh / 3);
+    background-color: #8585AD;
+    border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #8585AD;
+}
+
+/*Component style*/
+
+.container {
+    display: flex;
+    flex: 0 1 50%;
+    flex-direction: column;
+    height: calc(100vh - 128px - 40px);
+    max-width: 600px;
+    font-family: "Jet Brains Mono", Arial, sans-serif;
+    padding-top: 40px;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    color: #F2F2F3;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: bold;
+}
+
+.categories {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-y: auto;
+    scroll-snap-type: y;
+    margin-bottom: 40px;
+}
+
+.category {
+
+}
+
+.items {
+    display: grid;
+    grid-gap: 56px;
+    grid-template-columns: repeat(2, 1fr);
+    padding-left: 0;
+    list-style: none;
+}
+
+.item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.wrap {
+    display: flex;
+    align-items: center;
+}
+
+.tabs {
+    margin-bottom: 40px;
+}
+
+.price {
+    margin-right: 9px;
+    color: #F2F2F3;
+    font-family: 'Iceland', Arial, sans-serif;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: normal;
+}
+
+.icon > svg {
+    width: 22px;
+    height: 22px;
+}
+
+.image {
+    border: 1px solid lightseagreen;
+}
+
+.name {
+    text-align: center;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+}
