@@ -44,15 +44,6 @@ class BurgerIngredients extends React.Component {
         }
     }
 
-    scrollClickHandler= () => {
-        let ingredientsWindow = document.querySelector('#ingredients')
-        let element = document.getElementById(`scroll-to-${this.state.current}`);
-        ingredientsWindow.scrollTo({
-            top: element.offsetTop - ingredientsWindow.offsetTop,
-            behavior: 'smooth'
-        })
-    }
-
     clickScrollHandler=()=> {
         let ingredientsWindow = document.querySelector('#ingredients')
         let element = document.getElementById(`scroll-to-${this.state.current}`);
