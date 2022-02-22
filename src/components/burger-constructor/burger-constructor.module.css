@@ -1,7 +1,70 @@
 .container {
     display: flex;
-    flex-direction: column;
-    font-family: "Jet Brains Mono", Arial, sans-serif;
     flex: 0 1 50%;
+    flex-direction: column;
+    height: calc(100vh - 188px - 52px);
     max-width: 600px;
+    padding: 100px 0 0 16px;
+    font-family: "Jet Brains Mono", Arial, sans-serif;
+}
+
+.item {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 32px auto;
+}
+
+.item__container {
+    display: flex;
+}
+
+.item:not(:last-child) {
+    margin-bottom: 16px;
+}
+
+.item_ban {
+    display: flex;
+    padding-left: 32px;
+    margin-bottom: 16px;
+}
+
+.item_ban_bottom {
+    display: flex;
+    padding-left: 32px;
+    margin-bottom: 40px;
+}
+
+.items {
+    padding-left: 0;
+    margin: 0 0 16px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    list-style: none;
+    scroll-snap-type: y;
+}
+
+.result {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin: auto 32px 52px 0;
+}
+
+.result_price {
+    margin-right: 8px;
+    font-family: 'Iceland', Arial, sans-serif;
+    font-size: 48px;
+    font-style: normal;
+    font-weight: normal;
+}
+
+.result__wrap {
+    display: flex;
+    align-items: center;
+    margin-right: 40px;
+}
+
+.result__wrap > svg {
+    width: 36px;
+    height: 36px;
 }
