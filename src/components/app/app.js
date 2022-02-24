@@ -1,87 +1,60 @@
-import React from "react";
-import appStyles from "./app.module.css";
-import DATA_MENU from "../../utils/data";
-import AppHeader from "../app-header/app-header";
-import BurgerIngredients from "../burger-ingredients/burger-ingredients";
-import BurgerConstructor from "../burger-constructor/burger-constructor";
+import React from 'react';
+import appStyles from './app.module.css';
+import DATA_MENU from '../../utils/data';
+import AppHeader from '../app-header/app-header';
+import BurgerIngredients from '../burger-ingredients/burger-ingredients';
+import BurgerConstructor from '../burger-constructor/burger-constructor';
 
-class App extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            bun: [],
-            main: [],
-            sauce: [],
-            selectedIngredients: {
-                bun: null,
-                ingredients: []
-            }
-        };
+export default function App() {
+    const [state, setState] = React.useState({bun: [], main: [], sauce: []})
+    const [selectedIngredients, setSelectedIngredients] = React.useState({bun: null, ingredients: []});
+
+    const setStateHandler = (bunArr, mainArr, sauceArr) =>
+        setState({bun: bunArr, main: mainArr, sauce: sauceArr});
+
+    const setSelectedIngredientsHandler = (data) =>
+        setSelectedIngredients(
+            data.type === 'bun' ? {...selectedIngredients, bun: data} :
+                {...selectedIngredients, ingredients: [...selectedIngredients.ingredients, data]});
+
+    const removeSelectedIngredientsItemHandler = (index) => {
+        let tmpIngredients = selectedIngredients.ingredients;
+        tmpIngredients.splice(index, 1);
+        setSelectedIngredients({...selectedIngredients, ingredients: tmpIngredients});
     }
 
-    componentDidMount() {
-        this.ingredientsArrHandler();
+    const sortNameHandler = (arr) => {
+        return arr.sort((a, b) => {
+            let nameA = a.name.toLowerCase(), nameB = b.name.toLowerCase();
+            return (nameA < nameB) ? -1 : (nameA > nameB) ? 1 : 0
+        })
     }
 
-    deleteItemHandler = (index) => {
-        let tmpIngredients = this.state.selectedIngredients.ingredients;
-        tmpIngredients.splice(index, 1)
-        this.setState(prevState => ({
-            ...prevState,
-            selectedIngredients: {
-                ...prevState.selectedIngredients,
-                ingredients: tmpIngredients
-            }
-        }))
-    }
-
-    ingredientsArrHandler = () => {
+    React.useEffect(() => {
         let tmpBun = [], tmpMain = [], tmpSauce = [];
-        DATA_MENU.map((value, index) => {
+        DATA_MENU.map(value => {
             if (value.type === "bun") return tmpBun.push(value);
             else if (value.type === "main") return tmpMain.push(value);
             else if (value.type === "sauce") return tmpSauce.push(value);
             return null;
         });
-        this.setState(prevState => ({...prevState, bun: tmpBun, main: tmpMain, sauce: tmpSauce}));
-    }
+        setStateHandler(sortNameHandler(tmpBun), sortNameHandler(tmpMain), sortNameHandler(tmpSauce));
+    }, []);
 
-    selectedIngredientsHandler = (arr) => {
-        if (arr.type === 'bun') {
-            this.setState(prevState => ({
-                ...prevState, selectedIngredients: {
-                    ...prevState.selectedIngredients, bun: arr
-                }
-            }));
-        } else {
-            this.setState(prevState => ({
-                ...prevState,
-                selectedIngredients: {
-                    ...prevState.selectedIngredients,
-                    ingredients: [...prevState.selectedIngredients.ingredients, arr]
-                }
-            }));
-        }
-    }
-
-    render() {
-        return (
-            <div className={appStyles.page}>
-                <AppHeader/>
-                <main className={appStyles.main}>
-                    <BurgerIngredients selectedIngredientsHandler={this.selectedIngredientsHandler}
-                                       bun={this.state.bun}
-                                       main={this.state.main}
-                                       sauce={this.state.sauce}
-                                       checked={this.state.selectedIngredients}
-                    />
-                    <BurgerConstructor selectedIngredients={this.state.selectedIngredients}
-                                       deleteHandler={this.deleteItemHandler}
-                    />
-                </main>
-            </div>
-        );
-    }
+    return (
+        <div className={appStyles.page}>
+            <AppHeader/>
+            <main className={appStyles.main}>
+                <BurgerIngredients selectedIngredientsHandler={setSelectedIngredientsHandler}
+                                   bun={state.bun}
+                                   main={state.main}
+                                   sauce={state.sauce}
+                                   checked={selectedIngredients}
+                />
+                <BurgerConstructor selectedIngredients={selectedIngredients}
+                                   deleteHandler={removeSelectedIngredientsItemHandler}
+                />
+            </main>
+        </div>
+    );
 }
-
-export default App;

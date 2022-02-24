@@ -1,83 +1,76 @@
 import React from 'react';
 import burgerIngredientsStyles from './burger-ingredients.module.css';
 import {Tab, CurrencyIcon, Counter} from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from 'prop-types';
+import menuItemPropTypes from '../../utils/constants';
 
-class BurgerIngredients extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            current: 'one',
-            active: 'one'
-        };
-    }
+export default function BurgerIngredients(props) {
+    const [current, setCurrent] = React.useState('one');
+    const [active, setActive] = React.useState('one');
 
-    componentDidMount() {
-        let elementOne = document.getElementById('scroll-to-one');
-        let elementTwo = document.getElementById('scroll-to-two');
-        let ingredientsContainer = document.querySelector('#ingredients')
-        if (elementOne && elementTwo) {
-            ingredientsContainer.addEventListener('scroll', () => this.tabActiveHandler(elementOne, elementTwo, ingredientsContainer))
-        }
-    }
+    const ingredientsRef = React.useRef(null);
+    const oneElementRef = React.useRef(null);
+    const twoElementRef = React.useRef(null);
+    const threeElementRef = React.useRef(null);
 
-    tabActiveHandler = (elemOne, elemTwo, container) => {
-        let elemOnePos = elemOne.getBoundingClientRect();
-        let elemTwoPos = elemTwo.getBoundingClientRect();
+    const setCurrentHandler = (name) => setCurrent(name);
 
-        if (elemOnePos.top <= 288+elemOne.scrollHeight && elemOnePos.top > (288 - elemOne.nextElementSibling.scrollHeight)) {
-            this.setState(prevState => ({...prevState, active: 'one'}))
-        } else if (elemTwoPos.top < 288 + elemTwo.scrollHeight && elemTwoPos.top > (288 - elemTwo.nextElementSibling.scrollHeight + 70)) {
-            this.setState(prevState => ({...prevState, active: 'two'}))
+    // Custom function for synchronizing scroll position and tabs
+    const setTabActiveHandler = () => {
+        let elemOnePos = oneElementRef.current.getBoundingClientRect();
+        let elemTwoPos = twoElementRef.current.getBoundingClientRect();
+        let containerPos = ingredientsRef.current.getBoundingClientRect();
+        const containerOffset = containerPos.top
+        const OFFSET_CUSTOM = 70;
+
+        if (elemOnePos.top <= containerOffset + oneElementRef.current.scrollHeight &&
+            elemOnePos.top > (containerOffset - oneElementRef.current.nextElementSibling.scrollHeight)) {
+            setActive('one');
+        } else if (elemTwoPos.top < containerOffset + twoElementRef.current.scrollHeight &&
+            elemTwoPos.top > (containerOffset - twoElementRef.current.nextElementSibling.scrollHeight + OFFSET_CUSTOM)) {
+            setActive('two');
         } else {
-            this.setState(prevState => ({...prevState, active: 'three'}))
+            setActive('three');
         }
     }
 
-    componentDidUpdate(prevProps, prevState, snapshot) {
-        if (this.state.current !== prevState.current) {
-                let ingredientsWindow = document.querySelector('#ingredients')
-                let element = document.getElementById(`scroll-to-${this.state.current}`);
-                ingredientsWindow.scrollTo({
-                    top: element.offsetTop - ingredientsWindow.offsetTop,
-                    behavior: 'smooth'
-                })
-        }
+    const clickScrollHandler = () => {
+        let element = current === 'one' ? oneElementRef.current :
+            current === 'two' ? twoElementRef.current : threeElementRef.current;
+        ingredientsRef.current.scrollTo({
+            top: element.offsetTop - ingredientsRef.current.offsetTop, behavior: 'smooth'
+        });
     }
 
-    clickScrollHandler=()=> {
-        let ingredientsWindow = document.querySelector('#ingredients')
-        let element = document.getElementById(`scroll-to-${this.state.current}`);
-        ingredientsWindow.scrollTo({
-            top: element.offsetTop - ingredientsWindow.offsetTop,
-            behavior: 'smooth'
-        })
-    }
+    React.useEffect(clickScrollHandler, [current]);
 
-    countCheckHandler = (value) => {
+    const countCheckHandler = (value) => {
         if (value.type === 'bun') {
-            if (this.props.checked.bun && value.type === 'bun' && this.props.checked.bun._id === value._id)
-                return <Counter count={1} size="default"/>
+            if (props.checked.bun && value.type === 'bun' && props.checked.bun._id === value._id)
+                return (<Counter count={1} size="default"/>)
         }
-
         if (value.type !== 'bun') {
-            let ingredientsCount = this.props.checked.ingredients.filter(item => item._id === value._id).length;
-            return ingredientsCount > 0 && <Counter count={ingredientsCount} size="default"/>
+            let ingredientsCount = props.checked.ingredients.filter(item => item._id === value._id).length;
+            return ingredientsCount > 0 && (<Counter count={ingredientsCount} size="default"/>)
         }
     }
 
-    categoryListHandler = (title, anchor, arr) =>
+    const categoryListHandler = (title, anchor, arr) => (
         <>
-            <h2 id={`scroll-to-${anchor}`}>{title}</h2>
+            {anchor === 'one' && (<h2 ref={oneElementRef}>{title}</h2>)}
+            {anchor === 'two' && (<h2 ref={twoElementRef}>{title}</h2>)}
+            {anchor === 'three' && (<h2 ref={threeElementRef}>{title}</h2>)}
+
             <ul className={burgerIngredientsStyles.items}>
-                {arr.map((value, index) => {
+                {arr.map((value) => {
                     return (
                         <li className={burgerIngredientsStyles.item}
-                            key={index}
-                            onClick={() => this.props.selectedIngredientsHandler(value)}>
+                            key={value._id}
+                            onClick={() => props.selectedIngredientsHandler(value)}>
                             <img className={burgerIngredientsStyles.image}
                                  src={value.image}
                                  alt=""/>
-                            {this.countCheckHandler(value)}
+                            {countCheckHandler(value)}
                             <div className={`${burgerIngredientsStyles.wrap} ${burgerIngredientsStyles.icon}`}>
                                 <span className={burgerIngredientsStyles.price}>{value.price}</span>
                                 <CurrencyIcon type="primary"/>
@@ -88,56 +81,45 @@ class BurgerIngredients extends React.Component {
                 })}
             </ul>
         </>
+    )
 
-    render() {
-        return (
-            <div className={burgerIngredientsStyles.container}>
-                <h1 className={burgerIngredientsStyles.title}>Соберите бургер</h1>
-                <div style={{display: 'flex'}} className={burgerIngredientsStyles.tabs}>
-                    <Tab value="one"
-                         active={this.state.active === 'one'}
-                         onClick={(e) => {
-                             if(this.state.current === 'one') {
-                                 this.clickScrollHandler()
-                             } else {
-                                 this.setState(prevState => ({...prevState, current: 'one'}))
-                             }
-                         }}>
-                        Булки
-                    </Tab>
-                    <Tab value="two"
-                         active={this.state.active === 'two'}
-                         onClick={(e) => {
-                             if(this.state.current === 'two') {
-                                 this.clickScrollHandler()
-                             } else {
-                                 this.setState(prevState => ({...prevState, current: 'two'}))
-                             }
-
-                         }}>
-                        Соусы
-                    </Tab>
-                    <Tab value="three"
-                         active={this.state.active === 'three'}
-                         onClick={(e) => {
-                             if(this.state.current === 'three') {
-                                 this.clickScrollHandler()
-                             } else {
-                                 this.setState(prevState => ({...prevState, current: 'three'}))
-                             }
-
-                         }}>
-                        Начинки
-                    </Tab>
-                </div>
-                <div id={'ingredients'} className={burgerIngredientsStyles.categories}>
-                    {this.categoryListHandler('Булки', 'one', this.props.bun)}
-                    {this.categoryListHandler('Соусы', 'two', this.props.sauce)}
-                    {this.categoryListHandler('Начинки', 'three', this.props.main)}
-                </div>
+    return (
+        <div className={burgerIngredientsStyles.container}>
+            <h1 className={burgerIngredientsStyles.title}>Соберите бургер</h1>
+            <div style={{display: 'flex'}} className={burgerIngredientsStyles.tabs}>
+                <Tab value="one"
+                     active={active === 'one'}
+                     onClick={() => current === 'one' ? clickScrollHandler() : setCurrentHandler('one')}>
+                    Булки
+                </Tab>
+                <Tab value="two"
+                     active={active === 'two'}
+                     onClick={() => current === 'two' ? clickScrollHandler() : setCurrentHandler('two')}>
+                    Соусы
+                </Tab>
+                <Tab value="three"
+                     active={active === 'three'}
+                     onClick={() => current === 'three' ? clickScrollHandler() : setCurrentHandler('three')}>
+                    Начинки
+                </Tab>
             </div>
-        )
-    }
+            <div ref={ingredientsRef} onScroll={() => setTabActiveHandler()}
+                 className={burgerIngredientsStyles.categories}>
+                {categoryListHandler('Булки', 'one', props.bun)}
+                {categoryListHandler('Соусы', 'two', props.sauce)}
+                {categoryListHandler('Начинки', 'three', props.main)}
+            </div>
+        </div>
+    )
 }
 
-export default BurgerIngredients;
+BurgerIngredients.propTypes = {
+    selectedIngredientsHandler: PropTypes.func,
+    bun: PropTypes.arrayOf(menuItemPropTypes.isRequired),
+    main: PropTypes.arrayOf(menuItemPropTypes.isRequired),
+    sauce: PropTypes.arrayOf(menuItemPropTypes.isRequired),
+    checked: PropTypes.shape({
+        bun: menuItemPropTypes,
+        ingredients: PropTypes.arrayOf(menuItemPropTypes.isRequired)
+    }),
+}
