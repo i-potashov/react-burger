@@ -1,0 +1,30 @@
+/*Scrollbar styles*/
+::-webkit-scrollbar {
+    width: 8px;
+    background-color: #131316;
+}
+
+::-webkit-scrollbar-thumb {
+    height: calc(100vh / 5);
+    background-color: #8585AD;
+    border-radius: 0;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #8585AD;
+}
+
+/*Component styles*/
+
+.page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+}
+
+.main {
+    display: flex;
+    justify-content: space-between;
+    min-width: 1280px;
+}

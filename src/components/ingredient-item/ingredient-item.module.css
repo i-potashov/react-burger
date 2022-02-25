@@ -1,0 +1,34 @@
+.item {
+    display: grid;
+    align-items: center;
+    grid-template-columns: 32px auto;
+}
+
+.item__container {
+    display: flex;
+}
+
+.item:not(:last-child) {
+    margin-bottom: 16px;
+}
+
+.item_ban {
+    display: flex;
+    padding-left: 32px;
+    margin-bottom: 16px;
+}
+
+.item_ban_bottom {
+    display: flex;
+    padding-left: 32px;
+    margin-bottom: 40px;
+}
+
+.items {
+    padding-left: 0;
+    margin: 0 0 16px;
+    box-sizing: border-box;
+    overflow-y: auto;
+    list-style: none;
+    scroll-snap-type: y;
+}

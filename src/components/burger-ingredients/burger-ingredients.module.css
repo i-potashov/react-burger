@@ -1,0 +1,85 @@
+.container {
+    position: relative;
+    display: flex;
+    flex: 0 1 50%;
+    flex-direction: column;
+    height: calc(100vh - 128px - 40px);
+    max-width: 600px;
+    padding-top: 40px;
+    font-family: "Jet Brains Mono", Arial, sans-serif;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    margin: 0 0 20px;
+    color: #F2F2F3;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: bold;
+}
+
+.categories {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    margin-bottom: 40px;
+    overflow-y: auto;
+    scroll-snap-type: y;
+}
+
+.categories > h2 {
+    padding-top: 40px;
+    margin: 0;
+}
+
+.items {
+    display: grid;
+    grid-gap: 56px;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 24px 16px 0;
+    margin: 0;
+    list-style: none;
+}
+
+.item {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+}
+
+.wrap {
+    display: flex;
+    align-items: center;
+}
+
+.tabs {
+
+}
+
+.price {
+    margin-right: 9px;
+    color: #F2F2F3;
+    font-family: 'Iceland', Arial, sans-serif;
+    font-size: 28px;
+    font-style: normal;
+    font-weight: normal;
+}
+
+.icon > svg {
+    width: 22px;
+    height: 22px;
+}
+
+.image {
+
+}
+
+.name {
+    text-align: center;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+}
