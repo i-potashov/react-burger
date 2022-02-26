@@ -1,3 +1,15 @@
+.container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    z-index: 999;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+}
+
 .wrap {
     position: relative;
     max-width: 720px;
@@ -8,6 +20,6 @@
 
 .close {
     position: absolute;
-    right: 40px;
     top: 40px;
+    right: 40px;
 }

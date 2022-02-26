@@ -12,7 +12,7 @@ export default function App() {
 
     const loadingHandler = () => setState({...state, hasError: false, isLoading: true});
     const loadedHandler = (data) => setState({...state, data, isLoading: false});
-    const errorHandler = (data) => setState({...state, hasError: true, isLoading: false});
+    const errorHandler = () => setState({...state, hasError: true, isLoading: false});
 
     const setIngredientsHandler = (bunArr, mainArr, sauceArr) =>
         setIngredients({bun: bunArr, main: mainArr, sauce: sauceArr});
@@ -38,27 +38,34 @@ export default function App() {
     }
 
     const getBurgersData = () => {
-        let tmpBun = [], tmpMain = [], tmpSauce = [];
-        state.data.map(value => {
-            if (value.type === "bun") return tmpBun.push(value);
-            else if (value.type === "main") return tmpMain.push(value);
-            else if (value.type === "sauce") return tmpSauce.push(value);
-            return null;
+        const tmpBun = [], tmpMain = [], tmpSauce = [];
+        state.data.forEach(value => {
+            switch (value.type) {
+                case 'bun' :
+                    tmpBun.push(value);
+                    break;
+                case 'main' :
+                    tmpMain.push(value);
+                    break;
+                default:
+                    tmpSauce.push(value);
+            }
         });
         setIngredientsHandler(sortNameHandler(tmpBun), sortNameHandler(tmpMain), sortNameHandler(tmpSauce));
     }
 
-
-
     React.useEffect(() => {
             const getData = async () => {
                 loadingHandler();
-                await fetch(API_CONFIG.URL)
-                    .then(res => res.json())
-                    .then(res => loadedHandler(res.data))
-                    .catch(e => errorHandler());
+                try {
+                    const res = await fetch(API_CONFIG.URL);
+                    const {data} = await res.json();
+                    loadedHandler(data)
+                } catch (error) {
+                    errorHandler(error)
+                }
             };
-            getData().then();
+            getData();
         }
         , []); // eslint-disable-line react-hooks/exhaustive-deps
 
@@ -67,7 +74,6 @@ export default function App() {
             getBurgersData()
         }
     }, [state.data]); // eslint-disable-line react-hooks/exhaustive-deps
-
 
     return (
         <div className={appStyles.page}>

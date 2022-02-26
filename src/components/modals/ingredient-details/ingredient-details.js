@@ -33,8 +33,6 @@ const IngredientDetails = (props) => {
     );
 }
 
-export default IngredientDetails;
-
 IngredientDetails.propTypes = {
     selectIngredient: PropTypes.shape({
         bun: PropTypes.arrayOf(menuItemPropTypes.isRequired),
@@ -42,3 +40,5 @@ IngredientDetails.propTypes = {
         main: PropTypes.arrayOf(menuItemPropTypes.isRequired),
     })
 }
+
+export default IngredientDetails;

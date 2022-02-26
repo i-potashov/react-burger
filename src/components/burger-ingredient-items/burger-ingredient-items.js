@@ -2,13 +2,11 @@ import React from 'react';
 import burgerIngredientItemsStyle from './burger-ingredient-items.module.css';
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from '../modals/modal/modal';
-import ModalOverlay from '../modals/modal-overlay/modal-overlay';
 import IngredientDetails from '../modals/ingredient-details/ingredient-details';
 import PropTypes from 'prop-types';
 import menuItemPropTypes from '../../utils/constants';
 
 const BurgerIngredientItems = (props) => {
-
     const bunHeaderRef = React.useRef(null);
     const sauceHeaderRef = React.useRef(null);
     const mainHeaderRef = React.useRef(null);
@@ -57,11 +55,9 @@ const BurgerIngredientItems = (props) => {
 
     return (
         <>
-            <ModalOverlay onClose={handleCloseModal} isOpen={isOpen}>
-                <Modal onClose={handleCloseModal}>
-                    <IngredientDetails selectIngredient={selectIngredient}/>
-                </Modal>
-            </ModalOverlay>
+            <Modal onClose={handleCloseModal} isOpen={isOpen}>
+                <IngredientDetails selectIngredient={selectIngredient}/>
+            </Modal>
             <h2 id={'bun_header'} ref={bunHeaderRef}>{'Булки'}</h2>
             <ul className={burgerIngredientItemsStyle.items}>
                 {ingredientItemsHandler(props.ingredients.bun)}
@@ -78,8 +74,6 @@ const BurgerIngredientItems = (props) => {
     )
 }
 
-export default BurgerIngredientItems;
-
 BurgerIngredientItems.propTypes = {
     selectedIngredientsHandler: PropTypes.func,
     ingredients: PropTypes.shape({
@@ -92,3 +86,5 @@ BurgerIngredientItems.propTypes = {
         ingredients: PropTypes.arrayOf(menuItemPropTypes.isRequired)
     }),
 }
+
+export default BurgerIngredientItems;
