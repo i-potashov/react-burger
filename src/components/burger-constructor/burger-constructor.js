@@ -1,11 +1,17 @@
 import React from 'react';
 import burgerConstructorStyles from './burger-constructor.module.css';
-import IngredientItem from '../ingredient-item/ingredient-item';
+import BurgerConstructorItems from '../burger-constructor-items/burger-constructor-items';
 import {CurrencyIcon, Button} from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import menuItemPropTypes from '../../utils/constants';
+import ModalOverlay from '../modals/modal-overlay/modal-overlay';
+import OrderDetails from "../modals/order-details/order-details";
+import withModal from '../../hocs/with-modal';
+
+const WithModalOrderDetails = withModal(OrderDetails);
 
 export default function BurgerConstructor(props) {
+    const [isOpen, setOpen] = React.useState(false);
 
     const totalPriceHandler = () => {
         let bunPrice = 0;
@@ -20,20 +26,36 @@ export default function BurgerConstructor(props) {
         );
     }
 
-    return (
+    const handleOpenModal = () => {
+        setOpen(true);
+    }
+
+    const handleCloseModal = () => {
+        setOpen(false);
+    }
+
+    return (<>
+        <ModalOverlay onClose={handleCloseModal} isOpen={isOpen}>
+            <WithModalOrderDetails onClose={handleCloseModal}/>
+        </ModalOverlay>
         <div className={burgerConstructorStyles.container}>
-            <IngredientItem selectedIngredients={props.selectedIngredients}
-                            deleteHandler={props.deleteHandler}
+            <BurgerConstructorItems selectedIngredients={props.selectedIngredients}
+                                    deleteHandler={props.deleteHandler}
             />
             <div className={burgerConstructorStyles.result}>
                 <div className={burgerConstructorStyles.result__wrap}>
                     {totalPriceHandler()}
                     <CurrencyIcon type="primary"/>
                 </div>
-                <Button type="primary" size="medium">Оформить заказ</Button>
+                <Button type="primary"
+                        size="medium"
+                        onClick={() => handleOpenModal()}
+                >
+                    Оформить заказ
+                </Button>
             </div>
         </div>
-    )
+    </>)
 }
 
 BurgerConstructor.propTypes = {

@@ -1,0 +1,13 @@
+.wrap {
+    position: relative;
+    max-width: 720px;
+    padding: 40px;
+    background-color: #1C1C21;
+    border-radius: 40px;
+}
+
+.close {
+    position: absolute;
+    right: 40px;
+    top: 40px;
+}

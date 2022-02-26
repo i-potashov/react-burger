@@ -1,21 +1,28 @@
 import React from 'react';
 import appStyles from './app.module.css';
-import DATA_MENU from '../../utils/data';
+import API_CONFIG from "../../utils/api-config";
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 
 export default function App() {
-    const [state, setState] = React.useState({bun: [], main: [], sauce: []})
+    const [state, setState] = React.useState({isLoading: false, hasError: false, data: null});
+    const [ingredients, setIngredients] = React.useState({bun: [], main: [], sauce: []})
     const [selectedIngredients, setSelectedIngredients] = React.useState({bun: null, ingredients: []});
 
-    const setStateHandler = (bunArr, mainArr, sauceArr) =>
-        setState({bun: bunArr, main: mainArr, sauce: sauceArr});
+    const loadingHandler = () => setState({...state, hasError: false, isLoading: true});
+    const loadedHandler = (data) => setState({...state, data, isLoading: false});
+    const errorHandler = (data) => setState({...state, hasError: true, isLoading: false});
 
-    const setSelectedIngredientsHandler = (data) =>
+    const setIngredientsHandler = (bunArr, mainArr, sauceArr) =>
+        setIngredients({bun: bunArr, main: mainArr, sauce: sauceArr});
+
+    const setSelectedIngredientsHandler = (data, e) => {
+        e.preventDefault();
         setSelectedIngredients(
             data.type === 'bun' ? {...selectedIngredients, bun: data} :
                 {...selectedIngredients, ingredients: [...selectedIngredients.ingredients, data]});
+    }
 
     const removeSelectedIngredientsItemHandler = (index) => {
         let tmpIngredients = selectedIngredients.ingredients;
@@ -30,30 +37,53 @@ export default function App() {
         })
     }
 
-    React.useEffect(() => {
+    const getBurgersData = () => {
         let tmpBun = [], tmpMain = [], tmpSauce = [];
-        DATA_MENU.map(value => {
+        state.data.map(value => {
             if (value.type === "bun") return tmpBun.push(value);
             else if (value.type === "main") return tmpMain.push(value);
             else if (value.type === "sauce") return tmpSauce.push(value);
             return null;
         });
-        setStateHandler(sortNameHandler(tmpBun), sortNameHandler(tmpMain), sortNameHandler(tmpSauce));
-    }, []);
+        setIngredientsHandler(sortNameHandler(tmpBun), sortNameHandler(tmpMain), sortNameHandler(tmpSauce));
+    }
+
+
+
+    React.useEffect(() => {
+            const getData = async () => {
+                loadingHandler();
+                await fetch(API_CONFIG.URL)
+                    .then(res => res.json())
+                    .then(res => loadedHandler(res.data))
+                    .catch(e => errorHandler());
+            };
+            getData().then();
+        }
+        , []); // eslint-disable-line react-hooks/exhaustive-deps
+
+    React.useEffect(() => {
+        if (state.data) {
+            getBurgersData()
+        }
+    }, [state.data]); // eslint-disable-line react-hooks/exhaustive-deps
+
 
     return (
         <div className={appStyles.page}>
             <AppHeader/>
             <main className={appStyles.main}>
-                <BurgerIngredients selectedIngredientsHandler={setSelectedIngredientsHandler}
-                                   bun={state.bun}
-                                   main={state.main}
-                                   sauce={state.sauce}
-                                   checked={selectedIngredients}
-                />
-                <BurgerConstructor selectedIngredients={selectedIngredients}
-                                   deleteHandler={removeSelectedIngredientsItemHandler}
-                />
+                {state.data &&
+                    (<>
+                        <BurgerIngredients selectedIngredientsHandler={setSelectedIngredientsHandler}
+                                           checked={selectedIngredients}
+                                           ingredients={ingredients}
+                        />
+                        <BurgerConstructor selectedIngredients={selectedIngredients}
+                                           deleteHandler={removeSelectedIngredientsItemHandler}
+                        />
+                    </>)
+                }
             </main>
         </div>
     );
