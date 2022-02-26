@@ -1,13 +1,11 @@
 import React from 'react';
 import burgerIngredientItemsStyle from './burger-ingredient-items.module.css';
 import {Counter, CurrencyIcon} from "@ya.praktikum/react-developer-burger-ui-components";
+import Modal from '../modals/modal/modal';
 import ModalOverlay from '../modals/modal-overlay/modal-overlay';
 import IngredientDetails from '../modals/ingredient-details/ingredient-details';
-import withModal from '../../hocs/with-modal';
 import PropTypes from 'prop-types';
 import menuItemPropTypes from '../../utils/constants';
-
-const WithModalIngredientDetails = withModal(IngredientDetails);
 
 const BurgerIngredientItems = (props) => {
 
@@ -60,7 +58,9 @@ const BurgerIngredientItems = (props) => {
     return (
         <>
             <ModalOverlay onClose={handleCloseModal} isOpen={isOpen}>
-                <WithModalIngredientDetails selectIngredient={selectIngredient} onClose={handleCloseModal}/>
+                <Modal onClose={handleCloseModal}>
+                    <IngredientDetails selectIngredient={selectIngredient}/>
+                </Modal>
             </ModalOverlay>
             <h2 id={'bun_header'} ref={bunHeaderRef}>{'Булки'}</h2>
             <ul className={burgerIngredientItemsStyle.items}>

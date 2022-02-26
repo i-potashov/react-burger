@@ -2,13 +2,11 @@ import React from 'react';
 import burgerConstructorStyles from './burger-constructor.module.css';
 import BurgerConstructorItems from '../burger-constructor-items/burger-constructor-items';
 import {CurrencyIcon, Button} from '@ya.praktikum/react-developer-burger-ui-components';
+import ModalOverlay from '../modals/modal-overlay/modal-overlay';
+import Modal from '../modals/modal/modal';
+import OrderDetails from '../modals/order-details/order-details';
 import PropTypes from 'prop-types';
 import menuItemPropTypes from '../../utils/constants';
-import ModalOverlay from '../modals/modal-overlay/modal-overlay';
-import OrderDetails from "../modals/order-details/order-details";
-import withModal from '../../hocs/with-modal';
-
-const WithModalOrderDetails = withModal(OrderDetails);
 
 export default function BurgerConstructor(props) {
     const [isOpen, setOpen] = React.useState(false);
@@ -36,7 +34,9 @@ export default function BurgerConstructor(props) {
 
     return (<>
         <ModalOverlay onClose={handleCloseModal} isOpen={isOpen}>
-            <WithModalOrderDetails onClose={handleCloseModal}/>
+            <Modal onClose={handleCloseModal}>
+                <OrderDetails />
+            </Modal>
         </ModalOverlay>
         <div className={burgerConstructorStyles.container}>
             <BurgerConstructorItems selectedIngredients={props.selectedIngredients}

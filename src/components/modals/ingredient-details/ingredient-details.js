@@ -36,11 +36,9 @@ const IngredientDetails = (props) => {
 export default IngredientDetails;
 
 IngredientDetails.propTypes = {
-    ingredients: PropTypes.shape({
+    selectIngredient: PropTypes.shape({
         bun: PropTypes.arrayOf(menuItemPropTypes.isRequired),
         sauce: PropTypes.arrayOf(menuItemPropTypes.isRequired),
         main: PropTypes.arrayOf(menuItemPropTypes.isRequired),
-    }),
-    onClick: PropTypes.func,
-    isOpen: PropTypes.bool
+    })
 }

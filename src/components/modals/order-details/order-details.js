@@ -1,7 +1,6 @@
 import React from 'react';
 import orderDetailsStyles from './order-details.module.css';
 import checkImage from '../../../images/graphics.svg';
-import PropTypes from "prop-types";
 
 const OrderDetails = () => {
     return (
@@ -17,8 +16,3 @@ const OrderDetails = () => {
 }
 
 export default OrderDetails;
-
-OrderDetails.propTypes = {
-    onClick: PropTypes.func,
-    isOpen: PropTypes.bool
-}
