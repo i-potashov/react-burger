@@ -1,0 +1,46 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-top: 80px;
+    font-family: 'Jet Brains Mono', Arial, sans-serif;
+}
+
+.order__number {
+    margin: 0 0 32px;
+    color: #F2F2F3;
+    font-family: 'Iceland', Arial, sans-serif;
+    font-size: 144px;
+    font-style: normal;
+    font-weight: normal;
+}
+
+.title {
+    margin: 0 0 60px;
+    color: #F2F2F3;
+    font-size: 24px;
+    font-style: normal;
+    font-weight: bold;
+}
+
+.image {
+    width: 120px;
+    height: 120px;
+    margin-bottom: 60px;
+}
+
+.text, .text__status {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: normal;
+}
+
+.text {
+    color: #F2F2F3;
+    margin: 0 0 8px;
+}
+
+.text__status {
+    color: #8585AD;
+    margin: 0 0 80px;
+}
