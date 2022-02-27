@@ -44,11 +44,14 @@ export default function App() {
                 case 'bun' :
                     tmpBun.push(value);
                     break;
+                case 'sauce' :
+                    tmpSauce.push(value);
+                    break;
                 case 'main' :
                     tmpMain.push(value);
                     break;
                 default:
-                    tmpSauce.push(value);
+                     return null;
             }
         });
         setIngredientsHandler(sortNameHandler(tmpBun), sortNameHandler(tmpMain), sortNameHandler(tmpSauce));
@@ -62,7 +65,8 @@ export default function App() {
                     const {data} = await res.json();
                     loadedHandler(data)
                 } catch (error) {
-                    errorHandler(error)
+                    errorHandler();
+                    console.log(`Error: ${error.message}`)
                 }
             };
             getData();
