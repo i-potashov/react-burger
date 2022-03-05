@@ -1,18 +1,23 @@
 .container {
     display: flex;
-    flex-direction: column;
     align-items: center;
+    flex-direction: column;
+
     margin-bottom: 20px;
+
     font-family: 'Jet Brains Mono', Arial, sans-serif;
 }
 
 .title {
-    margin: 0 0;
-    color: #F2F2F3;
-    font-size: 36px;
-    font-style: normal;
-    font-weight: bold;
     align-self: start;
+
+    margin: 0 0;
+
+    color: #f2f2f3;
+
+    font-size: 36px;
+    font-weight: bold;
+    font-style: normal;
     line-height: 2;
 }
 
@@ -23,27 +28,33 @@
 }
 
 .text {
-    font-size: 24px;
-    font-style: normal;
-    font-weight: bold;
-    color: #F2F2F3;
     margin: 0 0 32px;
+
+    color: #f2f2f3;
+
+    font-size: 24px;
+    font-weight: bold;
+    font-style: normal;
 }
 
 .wrap {
     display: flex;
-    color: #8585AD;
-    list-style: none;
-    padding: 0;
+
     margin: 0 0 20px;
+    padding: 0;
+
+    list-style: none;
+
+    color: #8585ad;
 }
 
 .item {
     display: flex;
-    flex-direction: column;
     align-items: center;
-    font-style: normal;
+    flex-direction: column;
+
     font-weight: normal;
+    font-style: normal;
 }
 
 .item:not(:last-child) {
@@ -51,13 +62,14 @@
 }
 
 .item__text {
-    font-size: 16px;
     margin: 0 0 8px;
+
+    font-size: 16px;
 }
 
 .item__count {
+    margin: 0;
+
     font-family: 'Iceland', Arial, sans-serif;
     font-size: 28px;
-    margin: 0;
 }
-

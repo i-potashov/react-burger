@@ -1,20 +1,22 @@
-
-
-
 .items {
     display: grid;
+
+    margin: 0;
+    padding: 24px 16px 0;
+
+    list-style: none;
+
     grid-gap: 56px;
     grid-template-columns: repeat(2, 1fr);
-    padding: 24px 16px 0;
-    margin: 0;
-    list-style: none;
 }
 
 .item {
     position: relative;
+
     display: flex;
-    flex-direction: column;
     align-items: center;
+    flex-direction: column;
+
     cursor: pointer;
 }
 
@@ -23,14 +25,15 @@
     align-items: center;
 }
 
-
 .price {
     margin-right: 9px;
-    color: #F2F2F3;
+
+    color: #f2f2f3;
+
     font-family: 'Iceland', Arial, sans-serif;
     font-size: 28px;
-    font-style: normal;
     font-weight: normal;
+    font-style: normal;
 }
 
 .icon > svg {
@@ -39,12 +42,12 @@
 }
 
 .image {
-
 }
 
 .name {
     text-align: center;
+
     font-size: 16px;
-    font-style: normal;
     font-weight: 400;
+    font-style: normal;
 }

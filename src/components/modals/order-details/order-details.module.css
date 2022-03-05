@@ -1,26 +1,32 @@
 .container {
     display: flex;
-    flex-direction: column;
     align-items: center;
+    flex-direction: column;
+
     padding-top: 80px;
+
     font-family: 'Jet Brains Mono', Arial, sans-serif;
 }
 
 .order__number {
     margin: 0 0 32px;
-    color: #F2F2F3;
+
+    color: #f2f2f3;
+
     font-family: 'Iceland', Arial, sans-serif;
     font-size: 144px;
-    font-style: normal;
     font-weight: normal;
+    font-style: normal;
 }
 
 .title {
     margin: 0 0 60px;
-    color: #F2F2F3;
+
+    color: #f2f2f3;
+
     font-size: 24px;
-    font-style: normal;
     font-weight: bold;
+    font-style: normal;
 }
 
 .image {
@@ -29,18 +35,21 @@
     margin-bottom: 60px;
 }
 
-.text, .text__status {
+.text,
+.text__status {
     font-size: 16px;
-    font-style: normal;
     font-weight: normal;
+    font-style: normal;
 }
 
 .text {
-    color: #F2F2F3;
     margin: 0 0 8px;
+
+    color: #f2f2f3;
 }
 
 .text__status {
-    color: #8585AD;
     margin: 0 0 80px;
+
+    color: #8585ad;
 }

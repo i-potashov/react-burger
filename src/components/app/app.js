@@ -1,100 +1,137 @@
-import React from 'react';
+import React, { useReducer } from 'react';
 import appStyles from './app.module.css';
-import API_CONFIG from "../../utils/api-config";
+import API_CONFIG from '../../utils/api-config';
+import { ADD, REMOVE, BUN, SAUCE, MAIN } from '../../utils/names';
+import { SelectedIngredientsContext, IngredientsContext } from '../../services/appContext';
+import { selectedIngredientsInitialState, selectedIngredientsReducer } from './app-reducer';
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 
 export default function App() {
-    const [state, setState] = React.useState({isLoading: false, hasError: false, data: null});
-    const [ingredients, setIngredients] = React.useState({bun: [], main: [], sauce: []})
-    const [selectedIngredients, setSelectedIngredients] = React.useState({bun: null, ingredients: []});
+    const [state, setState] = React.useState({
+        isLoading: false,
+        hasError: false,
+        data: null,
+    });
 
-    const loadingHandler = () => setState({...state, hasError: false, isLoading: true});
-    const loadedHandler = (data) => setState({...state, data, isLoading: false});
-    const errorHandler = () => setState({...state, hasError: true, isLoading: false});
+    const [ingredients, setIngredients] = React.useState({
+        bun: [],
+        main: [],
+        sauce: [],
+    });
 
-    const setIngredientsHandler = (bunArr, mainArr, sauceArr) =>
-        setIngredients({bun: bunArr, main: mainArr, sauce: sauceArr});
+    const [selectedIngredients, selectedIngredientsDispatcher] = useReducer(
+        selectedIngredientsReducer,
+        selectedIngredientsInitialState,
+        undefined
+    );
 
     const setSelectedIngredientsHandler = (data, e) => {
         e.preventDefault();
-        setSelectedIngredients(
-            data.type === 'bun' ? {...selectedIngredients, bun: data} :
-                {...selectedIngredients, ingredients: [...selectedIngredients.ingredients, data]});
-    }
+        selectedIngredientsDispatcher({
+            type: ADD,
+            data: data,
+            selectedIngredients: selectedIngredients,
+        });
+    };
 
     const removeSelectedIngredientsItemHandler = (index) => {
         let tmpIngredients = selectedIngredients.ingredients;
         tmpIngredients.splice(index, 1);
-        setSelectedIngredients({...selectedIngredients, ingredients: tmpIngredients});
-    }
+        selectedIngredientsDispatcher({
+            type: REMOVE,
+            selectedIngredients: selectedIngredients,
+            tmpIngredients: tmpIngredients,
+        });
+    };
+
+    const loadingHandler = () => setState({ ...state, hasError: false, isLoading: true });
+    const loadedHandler = (data) => setState({ ...state, data, isLoading: false });
+    const errorHandler = () => setState({ ...state, hasError: true, isLoading: false });
+
+    const setIngredientsHandler = (bunArr, mainArr, sauceArr) =>
+        setIngredients({ bun: bunArr, main: mainArr, sauce: sauceArr });
 
     const sortNameHandler = (arr) => {
         return arr.sort((a, b) => {
-            let nameA = a.name.toLowerCase(), nameB = b.name.toLowerCase();
-            return (nameA < nameB) ? -1 : (nameA > nameB) ? 1 : 0
-        })
-    }
+            let nameA = a.name.toLowerCase(),
+                nameB = b.name.toLowerCase();
+            return nameA < nameB ? -1 : nameA > nameB ? 1 : 0;
+        });
+    };
 
     const getBurgersData = () => {
-        const tmpBun = [], tmpMain = [], tmpSauce = [];
-        state.data.forEach(value => {
+        const tmpBun = [],
+            tmpMain = [],
+            tmpSauce = [];
+        state.data.forEach((value) => {
             switch (value.type) {
-                case 'bun' :
+                case BUN:
                     tmpBun.push(value);
                     break;
-                case 'sauce' :
+                case SAUCE:
                     tmpSauce.push(value);
                     break;
-                case 'main' :
+                case MAIN:
                     tmpMain.push(value);
                     break;
                 default:
-                     return null;
+                    return null;
             }
         });
         setIngredientsHandler(sortNameHandler(tmpBun), sortNameHandler(tmpMain), sortNameHandler(tmpSauce));
-    }
+    };
 
     React.useEffect(() => {
-            const getData = async () => {
-                loadingHandler();
-                try {
-                    const res = await fetch(API_CONFIG.URL);
-                    const {data} = await res.json();
-                    loadedHandler(data)
-                } catch (error) {
-                    errorHandler();
-                    console.log(`Error: ${error.message}`)
-                }
-            };
-            getData();
-        }
-        , []); // eslint-disable-line react-hooks/exhaustive-deps
+        const getData = async () => {
+            loadingHandler();
+            try {
+                const res = await fetch(API_CONFIG.URL);
+                const { data } = await res.json();
+                loadedHandler(data);
+            } catch (error) {
+                errorHandler();
+                console.log(`Error: ${error.message}`);
+            }
+        };
+        getData();
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     React.useEffect(() => {
         if (state.data) {
-            getBurgersData()
+            getBurgersData();
         }
     }, [state.data]); // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <div className={appStyles.page}>
-            <AppHeader/>
+            <AppHeader />
             <main className={appStyles.main}>
-                {state.data &&
-                    (<>
-                        <BurgerIngredients selectedIngredientsHandler={setSelectedIngredientsHandler}
-                                           checked={selectedIngredients}
-                                           ingredients={ingredients}
-                        />
-                        <BurgerConstructor selectedIngredients={selectedIngredients}
-                                           deleteHandler={removeSelectedIngredientsItemHandler}
-                        />
-                    </>)
-                }
+                {state.data && (
+                    <IngredientsContext.Provider value={{ ingredients }}>
+                        <SelectedIngredientsContext.Provider
+                            value={{
+                                selectedIngredients,
+                                setSelectedIngredientsHandler,
+                                removeSelectedIngredientsItemHandler,
+                            }}>
+                            <BurgerIngredients />
+                            <BurgerConstructor />
+                        </SelectedIngredientsContext.Provider>
+                    </IngredientsContext.Provider>
+                )}
             </main>
         </div>
     );
 }
+
+/* <BurgerIngredients
+                                selectedIngredientsHandler={setSelectedIngredientsHandler}
+                                checked={selectedIngredients}
+                                ingredients={ingredients}
+                            />
+                            <BurgerConstructor
+                                selectedIngredients={selectedIngredients}
+                                deleteHandler={removeSelectedIngredientsItemHandler}
+                            /> */

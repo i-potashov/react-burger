@@ -2,10 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import modalStyles from './modal.module.css';
 import ModalOverlay from '../modal-overlay/modal-overlay';
-import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components';
+import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 
-const Modal = props => {
+const Modal = (props) => {
     const modalElement = document.getElementById('modal');
 
     React.useEffect(() => {
@@ -17,25 +17,26 @@ const Modal = props => {
         return () => {
             window.removeEventListener('keydown', handleEsc);
         };
-    }, []);// eslint-disable-line react-hooks/exhaustive-deps
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
     return ReactDOM.createPortal(
-        props.isOpen &&
-        <ModalOverlay handleCloseModal={props.onClose}>
+        props.isOpen && (
+            <ModalOverlay handleCloseModal={props.onClose}>
                 <div className={modalStyles.wrap}>
                     <div className={modalStyles.close} onClick={props.onClose}>
-                        <CloseIcon type="primary"/>
+                        <CloseIcon type='primary' />
                     </div>
                     {props.children}
                 </div>
-        </ModalOverlay>,
+            </ModalOverlay>
+        ),
         modalElement
-    )
+    );
 };
 
 Modal.propTypes = {
     onClose: PropTypes.func,
-    isOpen: PropTypes.bool
-}
+    isOpen: PropTypes.bool,
+};
 
 export default Modal;
