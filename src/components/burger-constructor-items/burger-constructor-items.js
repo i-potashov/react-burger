@@ -1,8 +1,6 @@
 import React, { useContext } from 'react';
 import burgerConstructorItemsStyles from './burger-constructor-items.module.css';
 import { DragIcon, ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-// import PropTypes from 'prop-types';
-// import menuItemPropTypes from '../../utils/constants';
 
 import { SelectedIngredientsContext } from '../../services/appContext';
 
@@ -47,11 +45,3 @@ export default function BurgerConstructorItems() {
         </>
     );
 }
-
-// BurgerConstructorItems.propTypes = {
-//     selectedIngredients: PropTypes.shape({
-//         bun: menuItemPropTypes,
-//         ingredients: PropTypes.arrayOf(menuItemPropTypes.isRequired),
-//     }),
-//     deleteHandler: PropTypes.func,
-// };

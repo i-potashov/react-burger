@@ -1,7 +1,8 @@
 .wrap {
     position: relative;
 
-    max-width: 720px;
+    box-sizing: border-box;
+    width: 720px;
     padding: 40px;
 
     border-radius: 40px;

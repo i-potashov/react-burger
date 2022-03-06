@@ -3,7 +3,10 @@ import appStyles from './app.module.css';
 import API_CONFIG from '../../utils/api-config';
 import { ADD, REMOVE, BUN, SAUCE, MAIN } from '../../utils/names';
 import { SelectedIngredientsContext, IngredientsContext } from '../../services/appContext';
+import { TotalPriceContext, ReceivedDataContext } from '../../services/appContext';
 import { selectedIngredientsInitialState, selectedIngredientsReducer } from './app-reducer';
+import { totalPriceInitialState, totalPriceReducer } from './app-reducer';
+import { receivedDataInitialState, receivedDataReducer } from './app-reducer';
 import AppHeader from '../app-header/app-header';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
@@ -26,6 +29,10 @@ export default function App() {
         selectedIngredientsInitialState,
         undefined
     );
+
+    const [totalPrice, totalPriceDispatcher] = useReducer(totalPriceReducer, totalPriceInitialState, undefined);
+
+    const [receivedData, receivedDataDispatcher] = useReducer(receivedDataReducer, receivedDataInitialState, undefined);
 
     const setSelectedIngredientsHandler = (data, e) => {
         e.preventDefault();
@@ -116,8 +123,12 @@ export default function App() {
                                 setSelectedIngredientsHandler,
                                 removeSelectedIngredientsItemHandler,
                             }}>
-                            <BurgerIngredients />
-                            <BurgerConstructor />
+                            <TotalPriceContext.Provider value={{ totalPrice, totalPriceDispatcher }}>
+                                <ReceivedDataContext.Provider value={{ receivedData, receivedDataDispatcher }}>
+                                    <BurgerIngredients />
+                                    <BurgerConstructor />
+                                </ReceivedDataContext.Provider>
+                            </TotalPriceContext.Provider>
                         </SelectedIngredientsContext.Provider>
                     </IngredientsContext.Provider>
                 )}
@@ -125,13 +136,3 @@ export default function App() {
         </div>
     );
 }
-
-/* <BurgerIngredients
-                                selectedIngredientsHandler={setSelectedIngredientsHandler}
-                                checked={selectedIngredients}
-                                ingredients={ingredients}
-                            />
-                            <BurgerConstructor
-                                selectedIngredients={selectedIngredients}
-                                deleteHandler={removeSelectedIngredientsItemHandler}
-                            /> */

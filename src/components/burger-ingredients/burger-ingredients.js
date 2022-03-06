@@ -2,8 +2,6 @@ import React from 'react';
 import burgerIngredientsStyles from './burger-ingredients.module.css';
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import BurgerIngredientItems from '../burger-ingredient-items/burger-ingredient-items';
-// import PropTypes from 'prop-types';
-// import menuItemPropTypes from '../../utils/constants';
 
 export default function BurgerIngredients() {
     const [current, setCurrent] = React.useState('buns');
@@ -90,16 +88,3 @@ export default function BurgerIngredients() {
         </>
     );
 }
-
-// BurgerIngredients.propTypes = {
-//     selectedIngredientsHandler: PropTypes.func,
-//     ingredients: PropTypes.shape({
-//         bun: PropTypes.arrayOf(menuItemPropTypes.isRequired),
-//         sauce: PropTypes.arrayOf(menuItemPropTypes.isRequired),
-//         main: PropTypes.arrayOf(menuItemPropTypes.isRequired),
-//     }),
-//     checked: PropTypes.shape({
-//         bun: menuItemPropTypes,
-//         ingredients: PropTypes.arrayOf(menuItemPropTypes.isRequired),
-//     }),
-// };

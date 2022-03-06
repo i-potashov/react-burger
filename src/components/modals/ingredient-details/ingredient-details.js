@@ -3,7 +3,7 @@ import ingredientDetailsStyles from './ingredient-details.module.css';
 import PropTypes from 'prop-types';
 import menuItemPropTypes from '../../../utils/constants';
 
-const IngredientDetails = (props) => {
+export default function IngredientDetails(props) {
     return (
         <div className={ingredientDetailsStyles.container}>
             <h4 className={ingredientDetailsStyles.title}>Детали ингредиента</h4>
@@ -33,7 +33,7 @@ const IngredientDetails = (props) => {
             </ul>
         </div>
     );
-};
+}
 
 IngredientDetails.propTypes = {
     selectIngredient: PropTypes.shape({
@@ -42,5 +42,3 @@ IngredientDetails.propTypes = {
         main: PropTypes.arrayOf(menuItemPropTypes.isRequired),
     }),
 };
-
-export default IngredientDetails;

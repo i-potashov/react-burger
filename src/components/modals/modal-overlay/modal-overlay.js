@@ -2,7 +2,7 @@ import React from 'react';
 import modalOverlay from './modal-overlay.module.css';
 import PropTypes from 'prop-types';
 
-const ModalOverlay = (props) => {
+export default function ModalOverlay(props) {
     const modalOverlayRef = React.useRef(null);
 
     const handleClickOutside = (e) => {
@@ -14,10 +14,8 @@ const ModalOverlay = (props) => {
             {props.children}
         </div>
     );
-};
+}
 
 ModalOverlay.propTypes = {
     handleCloseModal: PropTypes.func,
 };
-
-export default ModalOverlay;

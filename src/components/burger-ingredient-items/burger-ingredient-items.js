@@ -3,8 +3,6 @@ import burgerIngredientItemsStyle from './burger-ingredient-items.module.css';
 import { Counter, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import Modal from '../modals/modal/modal';
 import IngredientDetails from '../modals/ingredient-details/ingredient-details';
-import PropTypes from 'prop-types';
-import menuItemPropTypes from '../../utils/constants';
 
 import { IngredientsContext, SelectedIngredientsContext } from '../../services/appContext';
 
@@ -76,16 +74,3 @@ export default function BurgerIngredientItems() {
         </>
     );
 }
-
-BurgerIngredientItems.propTypes = {
-    selectedIngredientsHandler: PropTypes.func,
-    ingredients: PropTypes.shape({
-        bun: PropTypes.arrayOf(menuItemPropTypes.isRequired),
-        sauce: PropTypes.arrayOf(menuItemPropTypes.isRequired),
-        main: PropTypes.arrayOf(menuItemPropTypes.isRequired),
-    }),
-    checked: PropTypes.shape({
-        bun: menuItemPropTypes,
-        ingredients: PropTypes.arrayOf(menuItemPropTypes.isRequired),
-    }),
-};
