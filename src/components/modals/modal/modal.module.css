@@ -1,16 +1,16 @@
 .wrap {
-    position: relative;
+  position: relative;
 
-    box-sizing: border-box;
-    width: 720px;
-    padding: 40px;
+  box-sizing: border-box;
+  width: 720px;
+  padding: 40px;
 
-    border-radius: 40px;
-    background-color: #1c1c21;
+  border-radius: 40px;
+  background-color: #1c1c21;
 }
 
 .close {
-    position: absolute;
-    top: 40px;
-    right: 40px;
+  position: absolute;
+  top: 40px;
+  right: 40px;
 }

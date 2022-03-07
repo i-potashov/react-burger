@@ -1,40 +1,40 @@
 .item {
-    display: grid;
-    align-items: center;
+  display: grid;
+  align-items: center;
 
-    grid-template-columns: 32px auto;
+  grid-template-columns: 32px auto;
 }
 
 .item__container {
-    display: flex;
+  display: flex;
 }
 
 .item:not(:last-child) {
-    margin-bottom: 16px;
+  margin-bottom: 16px;
 }
 
 .item_ban {
-    display: flex;
+  display: flex;
 
-    margin-bottom: 16px;
-    padding-left: 32px;
+  margin-bottom: 16px;
+  padding-left: 32px;
 }
 
 .item_ban_bottom {
-    display: flex;
+  display: flex;
 
-    margin-bottom: 40px;
-    padding-left: 32px;
+  margin-bottom: 40px;
+  padding-left: 32px;
 }
 
 .items {
-    overflow-y: auto;
+  overflow-y: auto;
 
-    box-sizing: border-box;
-    margin: 0 0 16px;
-    padding-left: 0;
+  box-sizing: border-box;
+  margin: 0 0 16px;
+  padding-left: 0;
 
-    list-style: none;
+  list-style: none;
 
-    scroll-snap-type: y;
+  scroll-snap-type: y;
 }

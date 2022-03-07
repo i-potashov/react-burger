@@ -1,55 +1,56 @@
 .container {
-    display: flex;
-    align-items: center;
-    flex-direction: column;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 
-    padding-top: 80px;
+  padding-top: 80px;
 
-    font-family: 'Jet Brains Mono', Arial, sans-serif;
+  font-family: "Jet Brains Mono", Arial, sans-serif;
 }
 
 .order__number {
-    margin: 0 0 32px;
+  margin: 0 0 32px;
 
-    color: #f2f2f3;
+  color: #f2f2f3;
 
-    font-family: 'Iceland', Arial, sans-serif;
-    font-size: 144px;
-    font-weight: normal;
-    font-style: normal;
+  font: 144px normal Iceland, Arial, sans-serif;
+  font-family: Iceland, Arial, sans-serif;
+  font-size: 144px;
+  font-weight: normal;
+  font-style: normal;
 }
 
 .title {
-    margin: 0 0 60px;
+  margin: 0 0 60px;
 
-    color: #f2f2f3;
+  color: #f2f2f3;
 
-    font-size: 24px;
-    font-weight: bold;
-    font-style: normal;
+  font-size: 24px;
+  font-weight: bold;
+  font-style: normal;
 }
 
 .image {
-    width: 120px;
-    height: 120px;
-    margin-bottom: 60px;
+  width: 120px;
+  height: 120px;
+  margin-bottom: 60px;
 }
 
 .text,
 .text__status {
-    font-size: 16px;
-    font-weight: normal;
-    font-style: normal;
+  font-size: 16px;
+  font-weight: normal;
+  font-style: normal;
 }
 
 .text {
-    margin: 0 0 8px;
+  margin: 0 0 8px;
 
-    color: #f2f2f3;
+  color: #f2f2f3;
 }
 
 .text__status {
-    margin: 0 0 80px;
+  margin: 0 0 80px;
 
-    color: #8585ad;
+  color: #8585ad;
 }

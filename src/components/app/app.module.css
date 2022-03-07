@@ -1,4 +1,4 @@
-/*Scrollbar styles*/
+/* Scrollbar styles */
 ::-webkit-scrollbar {
   width: 8px;
 
@@ -16,7 +16,7 @@
   background-color: #8585ad;
 }
 
-/*Component styles*/
+/* Component styles */
 
 .page {
   display: flex;
