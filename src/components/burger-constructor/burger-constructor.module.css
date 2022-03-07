@@ -1,34 +1,40 @@
 .container {
-    display: flex;
-    flex: 0 1 50%;
-    flex-direction: column;
-    height: calc(100vh - 188px - 52px);
-    max-width: 600px;
-    padding: 100px 0 0 16px;
-    font-family: "Jet Brains Mono", Arial, sans-serif;
+  display: flex;
+  flex: 0 1 50%;
+  flex-direction: column;
+
+  max-width: 600px;
+  height: calc(100vh - 188px - 52px);
+  padding: 100px 0 0 16px;
+
+  font-family: "Jet Brains Mono", Arial, sans-serif;
 }
+
 .result {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    margin: auto 32px 52px 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  margin: auto 32px 52px 0;
 }
 
 .result_price {
-    margin-right: 8px;
-    font-family: 'Iceland', Arial, sans-serif;
-    font-size: 48px;
-    font-style: normal;
-    font-weight: normal;
+  margin-right: 8px;
+
+  font-family: Iceland, Arial, sans-serif;
+  font-size: 48px;
+  font-weight: normal;
+  font-style: normal;
 }
 
 .result__wrap {
-    display: flex;
-    align-items: center;
-    margin-right: 40px;
+  display: flex;
+  align-items: center;
+
+  margin-right: 40px;
 }
 
 .result__wrap > svg {
-    width: 36px;
-    height: 36px;
+  width: 36px;
+  height: 36px;
 }

@@ -1,50 +1,50 @@
-
-
-
 .items {
-    display: grid;
-    grid-gap: 56px;
-    grid-template-columns: repeat(2, 1fr);
-    padding: 24px 16px 0;
-    margin: 0;
-    list-style: none;
+  display: grid;
+
+  margin: 0;
+  padding: 24px 16px 0;
+
+  list-style: none;
+
+  grid-gap: 56px;
+  grid-template-columns: repeat(2, 1fr);
 }
 
 .item {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    cursor: pointer;
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+
+  cursor: pointer;
 }
 
 .wrap {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
-
 .price {
-    margin-right: 9px;
-    color: #F2F2F3;
-    font-family: 'Iceland', Arial, sans-serif;
-    font-size: 28px;
-    font-style: normal;
-    font-weight: normal;
+  margin-right: 9px;
+
+  color: #f2f2f3;
+
+  font-family: Iceland, Arial, sans-serif;
+  font-size: 28px;
+  font-weight: normal;
+  font-style: normal;
 }
 
 .icon > svg {
-    width: 22px;
-    height: 22px;
-}
-
-.image {
-
+  width: 22px;
+  height: 22px;
 }
 
 .name {
-    text-align: center;
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 400;
+  text-align: center;
+
+  font-size: 16px;
+  font-weight: 400;
+  font-style: normal;
 }

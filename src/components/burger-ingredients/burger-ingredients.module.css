@@ -1,39 +1,46 @@
 .container {
-    position: relative;
-    display: flex;
-    flex: 0 1 50%;
-    flex-direction: column;
-    height: calc(100vh - 128px - 40px);
-    max-width: 600px;
-    padding-top: 40px;
-    font-family: "Jet Brains Mono", Arial, sans-serif;
+  position: relative;
+
+  display: flex;
+  flex: 0 1 50%;
+  flex-direction: column;
+
+  max-width: 600px;
+  height: calc(100vh - 128px - 40px);
+  padding-top: 40px;
+
+  font-family: "Jet Brains Mono", Arial, sans-serif;
 }
 
 .tabs {
-    display: flex;
+  display: flex;
 }
 
-
 .title {
-    display: flex;
-    align-items: center;
-    margin: 0 0 20px;
-    color: #F2F2F3;
-    font-size: 36px;
-    font-style: normal;
-    font-weight: bold;
+  display: flex;
+  align-items: center;
+
+  margin: 0 0 20px;
+
+  color: #f2f2f3;
+
+  font-size: 36px;
+  font-weight: bold;
+  font-style: normal;
 }
 
 .categories {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    margin-bottom: 40px;
-    overflow-y: auto;
-    scroll-snap-type: y;
+  display: flex;
+  overflow-y: auto;
+  flex-direction: column;
+
+  height: 100%;
+  margin-bottom: 40px;
+
+  scroll-snap-type: y;
 }
 
 .categories > h2 {
-    padding-top: 40px;
-    margin: 0;
+  margin: 0;
+  padding-top: 40px;
 }
