@@ -103,12 +103,14 @@ export default function App() {
       }
     };
     getData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   React.useEffect(() => {
     if (state.data) {
       getBurgersData();
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [state.data]);
 
   return (

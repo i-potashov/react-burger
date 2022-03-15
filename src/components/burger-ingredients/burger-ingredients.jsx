@@ -51,6 +51,7 @@ export default function BurgerIngredients() {
 
   React.useEffect(() => {
     clickScrollHandler();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [current]);
 
   return (

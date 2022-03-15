@@ -77,6 +77,7 @@ export default function BurgerConstructor() {
       });
     };
     totalPriceHandler();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedIngredients]);
 
   return (
