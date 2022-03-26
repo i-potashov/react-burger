@@ -32,3 +32,19 @@
 
   min-width: 1280px;
 }
+
+.title {
+  display: flex;
+  align-items: center;
+
+  margin: 0 0 20px;
+  padding-top: 40px;
+
+  color: #f2f2f338;
+
+  font-family: "Jet Brains Mono", Arial, sans-serif;
+
+  font-size: 36px;
+  font-weight: bold;
+  font-style: normal;
+}

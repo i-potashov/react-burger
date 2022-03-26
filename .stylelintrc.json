@@ -7,11 +7,10 @@
 		"stylelint-order"
 	],
 	"rules": {
-		"indentation": [
-			2
-		],
+		"indentation": 2,
 		"color-hex-case": "lower",
-		"selector-class-pattern": "^[A-Za-z]+([_]{1,2}[A-Za-z]+?)?([_]{1,2}[A-Za-z]+)?$"
+		"selector-class-pattern": "^[A-Za-z]+([_-]{1,2}[A-Za-z]+?)?([_-]{1,2}[A-Za-z]+)?$",
+		"keyframes-name-pattern": "^[A-Za-z]+([_-]{1,2}[A-Za-z]+?)?([_-]{1,2}[A-Za-z]+)?$"
 	}
 }
 
