@@ -2,29 +2,13 @@
 import { Counter, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import React, { FC, useContext } from "react";
 import { v4 as uuid } from "uuid";
-import burgerIngredientItemsStyle from "./burger-ingredient-items.module.css";
-import sortArray from "../../../utils/helpers/sortArray.helpers";
-import {
-  IngredientsContext,
-  SelectedIngredientsContext,
-} from "../../../services/context/appContext";
+import styles from "./burger-ingredient-items.module.css";
+import sortArray from "../../../core/utils/sortArray";
 import Modal from "../../modals/modal/modal";
 import IngredientDetails from "../../modals/ingredient-details/ingredient-details";
-
-type AppBurger = {
-  _id: string;
-  name: string;
-  type: string;
-  proteins: number;
-  fat: number;
-  carbohydrates: number;
-  calories: number;
-  price: number;
-  image: string;
-  image_mobile: string;
-  image_large: string;
-  __v: number;
-};
+import IngredientsContext from "../../../core/store/context/ingredients";
+import SelectedIngredientsContext from "../../../core/store/context/selected-ingredients";
+import { IBurgerModel } from "../../../core/models/burger.model";
 
 type AppIngredients = {
   bunHeaderRef: React.RefObject<HTMLHeadingElement>;
@@ -41,18 +25,18 @@ const BurgerIngredientItems: FC<AppIngredients> = ({
   const { selectedIngredients, setSelectedIngredientsHandler } = useContext(
     SelectedIngredientsContext,
   );
-  const { bun, main, sauce } = ingredients;
-  const [selectIngredient, setSelectIngredient] = React.useState<AppBurger>();
+  const [selectIngredient, setSelectIngredient] = React.useState<IBurgerModel>();
   const [isOpen, setOpen] = React.useState(false);
+  const { bun, main, sauce } = ingredients;
 
-  const handleOpenModal = (value: AppBurger): void => {
+  const handleOpenModal = (value: IBurgerModel): void => {
     setOpen(true);
     setSelectIngredient(value);
   };
 
   const handleCloseModal = () => setOpen(false);
 
-  const countCheckHandler = (value: AppBurger) => {
+  const countCheckHandler = (value: IBurgerModel) => {
     if (value.type === "bun") {
       const tmpCount = selectedIngredients?.bun.filter((v) => v._id === value._id).length;
       if (tmpCount) {
@@ -67,25 +51,25 @@ const BurgerIngredientItems: FC<AppIngredients> = ({
     return null;
   };
 
-  const ingredientItemsHandler = (arr: AppBurger[]) => {
-    return sortArray(arr).map((value: AppBurger) => (
+  const ingredientItemsHandler = (arr: IBurgerModel[]) => {
+    return sortArray(arr).map((value: IBurgerModel) => (
       <li key={uuid()}>
         <div
           role="presentation"
-          className={burgerIngredientItemsStyle.item}
+          className={styles.item}
           key={value._id}
           onContextMenu={(e) =>
             setSelectedIngredientsHandler ? setSelectedIngredientsHandler(value, e) : null
           }
           onClick={() => handleOpenModal(value)}
         >
-          <img className={burgerIngredientItemsStyle.image} src={value.image} alt="" />
+          <img className={styles.image} src={value.image} alt="" />
           {countCheckHandler(value)}
-          <div className={`${burgerIngredientItemsStyle.wrap} ${burgerIngredientItemsStyle.icon}`}>
-            <span className={burgerIngredientItemsStyle.price}>{value.price}</span>
+          <div className={`${styles.wrap} ${styles.icon}`}>
+            <span className={styles.price}>{value.price}</span>
             <CurrencyIcon type="primary" />
           </div>
-          <h3 className={burgerIngredientItemsStyle.name}>{value.name}</h3>
+          <h3 className={styles.name}>{value.name}</h3>
         </div>
       </li>
     ));
@@ -104,15 +88,15 @@ const BurgerIngredientItems: FC<AppIngredients> = ({
           <h2 id="bun_header" ref={bunHeaderRef}>
             Булки
           </h2>
-          <ul className={burgerIngredientItemsStyle.items}>{ingredientItemsHandler(bun)}</ul>
+          <ul className={styles.items}>{ingredientItemsHandler(bun)}</ul>
           <h2 id="sauce_header" ref={sauceHeaderRef}>
             Соусы
           </h2>
-          <ul className={burgerIngredientItemsStyle.items}>{ingredientItemsHandler(sauce)}</ul>
+          <ul className={styles.items}>{ingredientItemsHandler(sauce)}</ul>
           <h2 id="main_header" ref={mainHeaderRef}>
             Начинки
           </h2>
-          <ul className={burgerIngredientItemsStyle.items}>{ingredientItemsHandler(main)}</ul>
+          <ul className={styles.items}>{ingredientItemsHandler(main)}</ul>
         </>
       )}
     </>

@@ -1,59 +1,39 @@
 import { FC } from "react";
-import ingredientDetailsStyles from "./ingredient-details.module.css";
-
-type AppBurger = {
-  _id: string;
-  name: string;
-  type: string;
-  proteins: number;
-  fat: number;
-  carbohydrates: number;
-  calories: number;
-  price: number;
-  image: string;
-  image_mobile: string;
-  image_large: string;
-  __v: number;
-};
+import { IBurgerModel } from "../../../core/models/burger.model";
+import styles from "./ingredient-details.module.css";
 
 interface Props {
-  selectIngredient: AppBurger;
+  selectIngredient: IBurgerModel;
 }
 
 const IngredientDetails: FC<Props> = ({ selectIngredient }) => {
   return (
-    <div className={ingredientDetailsStyles.container}>
+    <div className={styles.container}>
       {selectIngredient && (
         <>
-          <h4 className={ingredientDetailsStyles.title}>Детали ингредиента</h4>
+          <h4 className={styles.title}>Детали ингредиента</h4>
           <img
-            className={ingredientDetailsStyles.image}
+            className={styles.image}
             src={selectIngredient.image_large}
             alt={selectIngredient.name}
           />
-          <p className={ingredientDetailsStyles.text}>{selectIngredient.name}</p>
-          <ul className={ingredientDetailsStyles.wrap}>
-            <li className={ingredientDetailsStyles.item}>
-              <p className={ingredientDetailsStyles.item__text}>Калории,ккал</p>
-              <span className={ingredientDetailsStyles.item__count}>
-                {selectIngredient.calories}
-              </span>
+          <p className={styles.text}>{selectIngredient.name}</p>
+          <ul className={styles.wrap}>
+            <li className={styles.item}>
+              <p className={styles.item__text}>Калории,ккал</p>
+              <span className={styles.item__count}>{selectIngredient.calories}</span>
             </li>
-            <li className={ingredientDetailsStyles.item}>
-              <p className={ingredientDetailsStyles.item__text}>Белки, г</p>
-              <span className={ingredientDetailsStyles.item__count}>
-                {selectIngredient.proteins}
-              </span>
+            <li className={styles.item}>
+              <p className={styles.item__text}>Белки, г</p>
+              <span className={styles.item__count}>{selectIngredient.proteins}</span>
             </li>
-            <li className={ingredientDetailsStyles.item}>
-              <p className={ingredientDetailsStyles.item__text}>Жиры, г</p>
-              <span className={ingredientDetailsStyles.item__count}>{selectIngredient.fat}</span>
+            <li className={styles.item}>
+              <p className={styles.item__text}>Жиры, г</p>
+              <span className={styles.item__count}>{selectIngredient.fat}</span>
             </li>
-            <li className={ingredientDetailsStyles.item}>
-              <p className={ingredientDetailsStyles.item__text}>Углеводы, г</p>
-              <span className={ingredientDetailsStyles.item__count}>
-                {selectIngredient.carbohydrates}
-              </span>
+            <li className={styles.item}>
+              <p className={styles.item__text}>Углеводы, г</p>
+              <span className={styles.item__count}>{selectIngredient.carbohydrates}</span>
             </li>
           </ul>
         </>

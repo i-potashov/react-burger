@@ -2,22 +2,8 @@ import { FC, useContext } from "react";
 import { DragIcon, ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import { v4 as uuid } from "uuid";
 import styles from "./burger-constructor-items.module.css";
-import { SelectedIngredientsContext } from "../../../services/context/appContext";
-
-type AppBurger = {
-  _id: string;
-  name: string;
-  type: string;
-  proteins: number;
-  fat: number;
-  carbohydrates: number;
-  calories: number;
-  price: number;
-  image: string;
-  image_mobile: string;
-  image_large: string;
-  __v: number;
-};
+import SelectedIngredientsContext from "../../../core/store/context/selected-ingredients";
+import { IBurgerModel } from "../../../core/models/burger.model";
 
 const BurgerConstructorItems: FC = () => {
   const { selectedIngredients, removeSelectedIngredientsItemHandler } = useContext(
@@ -25,7 +11,7 @@ const BurgerConstructorItems: FC = () => {
   );
 
   const ingredientsShowHandler = (
-    ingredient: AppBurger,
+    ingredient: IBurgerModel,
     position: "top" | "bottom" | undefined,
     index?: number,
     locked: boolean = true,

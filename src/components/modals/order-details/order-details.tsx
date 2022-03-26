@@ -1,22 +1,20 @@
 import { useContext } from "react";
-import orderDetailsStyles from "./order-details.module.css";
+import styles from "./order-details.module.css";
 import checkImage from "../../../assets/images/graphics.svg";
-import { ReceivedDataContext } from "../../../services/context/appContext";
+import ReceivedDataContext from "../../../core/store/context/received-data";
 
 export default function OrderDetails() {
   const { receivedData } = useContext(ReceivedDataContext);
   return (
-    <div className={orderDetailsStyles.container}>
+    <div className={styles.container}>
       {receivedData?.order.number && (
         <>
-          <h4 className={orderDetailsStyles.title}>{receivedData.name}</h4>
-          <span className={orderDetailsStyles.order__number}>{receivedData.order.number}</span>
-          <p className={orderDetailsStyles.title}>идентификатор заказа</p>
-          <img className={orderDetailsStyles.image} src={checkImage} alt="" />
-          <p className={orderDetailsStyles.text}>Ваш заказ начали готовить</p>
-          <p className={orderDetailsStyles.text__status}>
-            Дождитесь готовности на орбитальной станции
-          </p>
+          <h4 className={styles.title}>{receivedData.name}</h4>
+          <span className={styles.order__number}>{receivedData.order.number}</span>
+          <p className={styles.title}>идентификатор заказа</p>
+          <img className={styles.image} src={checkImage} alt="" />
+          <p className={styles.text}>Ваш заказ начали готовить</p>
+          <p className={styles.text__status}>Дождитесь готовности на орбитальной станции</p>
         </>
       )}
     </div>

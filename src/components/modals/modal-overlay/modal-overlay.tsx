@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import React, { FC, useRef } from "react";
-import modalOverlay from "./modal-overlay.module.css";
+import styles from "./modal-overlay.module.css";
 
 interface IModalOverlayProps {
   handleCloseModal: () => void;
@@ -14,7 +14,7 @@ const ModalOverlay: FC<IModalOverlayProps> = ({ handleCloseModal, children }) =>
   };
 
   return (
-    <div className={modalOverlay.container} ref={modalOverlayRef} onMouseDown={handleClickOutside}>
+    <div className={styles.container} ref={modalOverlayRef} onMouseDown={handleClickOutside}>
       {children}
     </div>
   );

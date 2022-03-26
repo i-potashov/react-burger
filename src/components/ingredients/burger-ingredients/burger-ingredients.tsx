@@ -1,7 +1,7 @@
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components/dist/ui/tab";
 import { FC, useEffect, useRef, useState } from "react";
 import BurgerIngredientItems from "../burger-ingredient-items/burger-ingredient-items";
-import burgerIngredientsStyles from "./burger-ingredients.module.css";
+import styles from "./burger-ingredients.module.css";
 
 const BurgerIngredients: FC = () => {
   const [active, setActive] = useState("buns");
@@ -66,9 +66,9 @@ const BurgerIngredients: FC = () => {
   }, [current]);
 
   return (
-    <div className={burgerIngredientsStyles.container}>
-      <h1 className={burgerIngredientsStyles.title}>Соберите бургер</h1>
-      <div className={burgerIngredientsStyles.tabs}>
+    <div className={styles.container}>
+      <h1 className={styles.title}>Соберите бургер</h1>
+      <div className={styles.tabs}>
         <Tab
           value="one"
           active={active === "buns"}
@@ -93,11 +93,7 @@ const BurgerIngredients: FC = () => {
           Начинки
         </Tab>
       </div>
-      <div
-        ref={ingredientsRef}
-        onScroll={setTabActiveHandler}
-        className={burgerIngredientsStyles.categories}
-      >
+      <div ref={ingredientsRef} onScroll={setTabActiveHandler} className={styles.categories}>
         <BurgerIngredientItems
           bunHeaderRef={bunHeaderRef}
           sauceHeaderRef={sauceHeaderRef}

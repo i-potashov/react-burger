@@ -1,9 +1,10 @@
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
-import { FC, useContext, useState } from "react";
-import {
-  ReceivedDataContext,
-  SelectedIngredientsContext,
-} from "../../../services/context/appContext";
+import axios from "axios";
+import { FC, useContext } from "react";
+import API_CONFIG from "../../../core/config/api-config";
+import { addReceived, failure, receive } from "../../../core/store/actions/received-data";
+import ReceivedDataContext from "../../../core/store/context/received-data";
+import SelectedIngredientsContext from "../../../core/store/context/selected-ingredients";
 
 interface HandleOpenModal {
   handleOpenModal: () => void;
@@ -11,45 +12,24 @@ interface HandleOpenModal {
 
 const BurgerConstructorSendData: FC<HandleOpenModal> = ({ handleOpenModal }) => {
   const { selectedIngredients } = useContext(SelectedIngredientsContext);
-
-  const [loadingState, setLoadingState] = useState({
-    isLoading: false,
-    hasError: false,
-  });
-
   const { receivedDataDispatcher } = useContext(ReceivedDataContext);
-  const loadingHandler = () => setLoadingState({ hasError: false, isLoading: true });
-  const loadedHandler = () => setLoadingState({ ...loadingState, isLoading: false });
-  const errorHandler = () => setLoadingState({ hasError: true, isLoading: false });
-
-  const sendData = async () => {
-    loadingHandler();
-    try {
-      const res = await fetch("https://norma.nomoreparties.space/api/orders", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json;charset=utf-8",
-        },
-        body: JSON.stringify({
-          bun: selectedIngredients?.bun[0],
-          ingredients: selectedIngredients?.ingredients,
-        }),
-      });
-      const data = await res.json();
-      loadedHandler();
-      return data;
-    } catch (error) {
-      errorHandler();
-    }
-    return null;
-  };
 
   const setData = () => {
-    sendData()
-      .then((data) => {
-        if (receivedDataDispatcher) receivedDataDispatcher({ type: "add", payload: data });
-      })
-      .then(() => handleOpenModal());
+    if (receivedDataDispatcher) {
+      receivedDataDispatcher(receive());
+      axios
+        .post(API_CONFIG.SEND_URL, {
+          bun: selectedIngredients?.bun[0],
+          ingredients: selectedIngredients?.ingredients,
+        })
+        .then((result) => {
+          receivedDataDispatcher(addReceived({ receivedData: result.data }));
+          handleOpenModal();
+        })
+        .catch((e) => {
+          receivedDataDispatcher(failure({ receivedError: e }));
+        });
+    }
   };
 
   return (

@@ -1,7 +1,7 @@
 import { FC, ReactPortal, useEffect } from "react";
 import ReactDOM from "react-dom";
 import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import modalStyles from "./modal.module.css";
+import styles from "./modal.module.css";
 import ModalOverlay from "../modal-overlay/modal-overlay";
 
 interface IModal {
@@ -32,9 +32,8 @@ const Modal: FC<IModal> = ({ isOpen, onClose, children }): ReactPortal => {
   return ReactDOM.createPortal(
     isOpen && (
       <ModalOverlay handleCloseModal={onClose}>
-        <div className={modalStyles.wrap}>
-          {/* ! aria-hidden="true" убрать из линтера или решить проблему */}
-          <div className={modalStyles.close} onClick={onClose} aria-hidden="true">
+        <div className={styles.wrap}>
+          <div className={styles.close} onClick={onClose} aria-hidden="true">
             <CloseIcon type="primary" />
           </div>
           {children}
