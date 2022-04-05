@@ -7,10 +7,10 @@ import styles from "./burger-constructor-items.module.css";
 import SelectedIngredientsContext from "../../../core/store/context/selected-ingredients";
 import BurgerConstructorIngredient from "../burger-constructor-ingredient/burger-constructor-ingredient";
 
+// eslint-disable-next-line consistent-return
 function getStyle(snapshot: DroppableStateSnapshot) {
   if (!snapshot.draggingFromThisWith) return snapshot.isDraggingOver ? 2 : 0;
   if (snapshot.draggingFromThisWith) return snapshot.isDraggingOver ? 1 : 0;
-  return 0;
 }
 
 const BurgerConstructorItems: FC = () => {
@@ -28,11 +28,11 @@ const BurgerConstructorItems: FC = () => {
           {selectedIngredients && (
             <>
               <div className={styles.item_ban}>
-                {selectedIngredients.bun.map((v) => (
+                {selectedIngredients.bun.map((v, i) => (
                   <BurgerConstructorIngredient
                     ingredient={v}
                     position="top"
-                    index={null}
+                    index={i}
                     locked
                     key={uuid()}
                   />
