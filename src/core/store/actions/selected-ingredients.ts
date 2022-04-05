@@ -4,6 +4,7 @@ import { IBurgerModel } from "../../models/burger.model";
 export const ADD_INGREDIENTS = <const>"ADD_INGREDIENTS";
 export const ADD_BUN = <const>"ADD_BUN";
 export const REMOVE_INGREDIENT = <const>"REMOVE_INGREDIENT";
+export const CHANGE_INGREDIENTS = <const>"CHANGE_INGREDIENTS";
 
 // action creators
 
@@ -28,6 +29,13 @@ export const addBun = (payload: IBurgerModel) => {
 export const removeIngredient = (payload: IBurgerModel[]) => {
   return {
     type: REMOVE_INGREDIENT,
+    payload,
+  };
+};
+
+export const changeIngredients = (payload: IBurgerModel[]) => {
+  return {
+    type: CHANGE_INGREDIENTS,
     payload,
   };
 };
