@@ -10,6 +10,7 @@ type SelectedIngredients = {
   selectedIngredients?: Ingredients;
   setSelectedIngredientsHandler?: Function;
   removeSelectedIngredientsItemHandler?: Function;
+  changeSelectedIngredientsItemHandler?: Function;
 };
 const SelectedIngredientsContext = createContext<SelectedIngredients>({});
 

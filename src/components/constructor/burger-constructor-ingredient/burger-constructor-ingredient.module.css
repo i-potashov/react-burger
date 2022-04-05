@@ -1,0 +1,14 @@
+.item {
+  display: grid;
+  align-items: center;
+
+  grid-template-columns: 32px auto;
+}
+
+.item__container {
+  display: flex;
+}
+
+.item:not(:last-child) {
+  margin-bottom: 16px;
+}

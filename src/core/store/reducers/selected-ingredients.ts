@@ -1,5 +1,10 @@
 import { IBurgerModel } from "../../models/burger.model";
-import { ADD_BUN, ADD_INGREDIENTS, REMOVE_INGREDIENT } from "../actions/selected-ingredients";
+import {
+  ADD_BUN,
+  ADD_INGREDIENTS,
+  REMOVE_INGREDIENT,
+  CHANGE_INGREDIENTS,
+} from "../actions/selected-ingredients";
 
 type SelectedIngredientsState = {
   bun: IBurgerModel[] | [];
@@ -9,7 +14,8 @@ type SelectedIngredientsState = {
 type SelectedIngredientsAction =
   | { type: typeof ADD_INGREDIENTS; payload: IBurgerModel }
   | { type: typeof ADD_BUN; payload: IBurgerModel }
-  | { type: typeof REMOVE_INGREDIENT; payload: IBurgerModel[] };
+  | { type: typeof REMOVE_INGREDIENT; payload: IBurgerModel[] }
+  | { type: typeof CHANGE_INGREDIENTS; payload: IBurgerModel[] };
 
 export const selectedIngredientsInitialState = { bun: [], ingredients: [] };
 
@@ -23,6 +29,8 @@ export const selectedIngredientsReducer = (
     case ADD_BUN:
       return { ...state, bun: [action.payload] };
     case REMOVE_INGREDIENT:
+      return { ...state, ingredients: action.payload };
+    case CHANGE_INGREDIENTS:
       return { ...state, ingredients: action.payload };
     default:
       return { ...state };

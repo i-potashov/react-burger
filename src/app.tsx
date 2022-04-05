@@ -1,5 +1,8 @@
+/* eslint-disable no-underscore-dangle */
 import axios from "axios";
-import React, { FC, useEffect, useReducer } from "react";
+import { FC, useEffect, useReducer } from "react";
+import { DragDropContext } from "react-beautiful-dnd";
+import update from "immutability-helper";
 import API_CONFIG from "./core/config/api-config";
 import Header from "./components/layout/header/header";
 import BurgerIngredients from "./components/ingredients/burger-ingredients/burger-ingredients";
@@ -21,6 +24,7 @@ import { failure, request, success } from "./core/store/actions/data";
 import {
   addBun,
   addIngredients,
+  changeIngredients,
   removeIngredient,
 } from "./core/store/actions/selected-ingredients";
 
@@ -42,8 +46,7 @@ const App: FC = () => {
     receivedDataInitialState,
   );
 
-  const setSelectedIngredientsHandler = (data: IBurgerModel, e: React.SyntheticEvent) => {
-    e.preventDefault();
+  const setSelectedIngredientsHandler = (data: IBurgerModel) => {
     if (data.type !== "bun") {
       selectedIngredientsDispatcher(addIngredients(data));
     } else {
@@ -57,6 +60,10 @@ const App: FC = () => {
     );
   };
 
+  const changeSelectedIngredientsItemHandler = (data: IBurgerModel[]) => {
+    selectedIngredientsDispatcher(changeIngredients(data));
+  };
+
   useEffect(() => {
     dataDispatcher(request());
     axios
@@ -68,6 +75,38 @@ const App: FC = () => {
         dataDispatcher(failure(e));
       });
   }, []);
+
+  const onDragEnd: any = (result: { source: any; destination: any; draggableId: any }) => {
+    const { source, destination, draggableId } = result;
+    if (!destination) {
+      return;
+    }
+    if (ingredients?.bun && ingredients?.main && ingredients?.sauce) {
+      if (
+        destination.droppableId === "BURGER_CONSTRUCTOR" &&
+        source.droppableId === "BUN_INGREDIENTS_LIST"
+      ) {
+        const tmpItem = [...ingredients.bun, ...ingredients.main, ...ingredients.sauce].filter(
+          (v) => v._id === draggableId,
+        )[0];
+        if (tmpItem) setSelectedIngredientsHandler(tmpItem);
+      }
+
+      if (
+        destination.droppableId === "BURGER_CONSTRUCTOR" &&
+        source.droppableId !== "BUN_INGREDIENTS_LIST"
+      ) {
+        changeSelectedIngredientsItemHandler(
+          update<IBurgerModel[], any>(selectedIngredients?.ingredients, {
+            $splice: [
+              [source.index, 1],
+              [destination.index, 0, selectedIngredients?.ingredients[source.index]],
+            ],
+          }),
+        );
+      }
+    }
+  };
 
   return (
     <div className={styles.page}>
@@ -86,12 +125,15 @@ const App: FC = () => {
                 selectedIngredients,
                 setSelectedIngredientsHandler,
                 removeSelectedIngredientsItemHandler,
+                changeSelectedIngredientsItemHandler,
               }}
             >
               <TotalPriceContext.Provider value={{ totalPrice, totalPriceDispatcher }}>
                 <ReceivedDataContext.Provider value={{ receivedData, receivedDataDispatcher }}>
-                  <BurgerIngredients />
-                  <BurgerConstructor />
+                  <DragDropContext onDragEnd={onDragEnd}>
+                    <BurgerIngredients />
+                    <BurgerConstructor />
+                  </DragDropContext>
                 </ReceivedDataContext.Provider>
               </TotalPriceContext.Provider>
             </SelectedIngredientsContext.Provider>

@@ -1,4 +1,4 @@
-import { FC } from "react";
+import React, { FC } from "react";
 import {
   Logo,
   BurgerIcon,
@@ -39,4 +39,4 @@ const AppHeader: FC = () => {
   );
 };
 
-export default AppHeader;
+export default React.memo(AppHeader);

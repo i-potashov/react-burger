@@ -1,57 +1,81 @@
+/* eslint-disable react/jsx-props-no-spreading */
+/* eslint-disable no-underscore-dangle */
 import { FC, useContext } from "react";
-import { DragIcon, ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import { v4 as uuid } from "uuid";
+import { Droppable, DroppableStateSnapshot } from "react-beautiful-dnd";
 import styles from "./burger-constructor-items.module.css";
 import SelectedIngredientsContext from "../../../core/store/context/selected-ingredients";
-import { IBurgerModel } from "../../../core/models/burger.model";
+import BurgerConstructorIngredient from "../burger-constructor-ingredient/burger-constructor-ingredient";
+
+function getStyle(snapshot: DroppableStateSnapshot) {
+  if (!snapshot.draggingFromThisWith) return snapshot.isDraggingOver ? 2 : 0;
+  if (snapshot.draggingFromThisWith) return snapshot.isDraggingOver ? 1 : 0;
+  return 0;
+}
 
 const BurgerConstructorItems: FC = () => {
-  const { selectedIngredients, removeSelectedIngredientsItemHandler } = useContext(
-    SelectedIngredientsContext,
-  );
-
-  const ingredientsShowHandler = (
-    ingredient: IBurgerModel,
-    position: "top" | "bottom" | undefined,
-    index?: number,
-    locked: boolean = true,
-  ) => (
-    <ConstructorElement
-      type={position}
-      isLocked={locked}
-      text={ingredient.name}
-      price={ingredient.price}
-      thumbnail={ingredient.image}
-      handleClose={() => {
-        if (removeSelectedIngredientsItemHandler) removeSelectedIngredientsItemHandler(index);
-      }}
-      key={uuid()}
-    />
-  );
+  const { selectedIngredients } = useContext(SelectedIngredientsContext);
 
   return (
-    <>
-      {selectedIngredients && (
-        <>
-          <div className={styles.item_ban}>
-            {selectedIngredients.bun.map((v) => ingredientsShowHandler(v, "top"))}
-          </div>
-          <ul className={styles.items}>
-            {selectedIngredients.ingredients.map((value, index) => (
-              <li className={styles.item} key={uuid()}>
-                <DragIcon type="primary" />
-                <div className={styles.item__container}>
-                  {ingredientsShowHandler(value, undefined, index, false)}
-                </div>
-              </li>
-            ))}
-          </ul>
-          <div className={styles.item_ban_bottom}>
-            {selectedIngredients.bun.map((v) => ingredientsShowHandler(v, "bottom"))}
-          </div>
-        </>
+    <Droppable droppableId="BURGER_CONSTRUCTOR">
+      {(provided, snapshot) => (
+        <div
+          className={styles.items_wrap}
+          {...provided.droppableProps}
+          {...provided.innerRef}
+          ref={provided.innerRef}
+        >
+          {selectedIngredients && (
+            <>
+              <div className={styles.item_ban}>
+                {selectedIngredients.bun.map((v) => (
+                  <BurgerConstructorIngredient
+                    ingredient={v}
+                    position="top"
+                    index={null}
+                    locked
+                    key={uuid()}
+                  />
+                ))}
+              </div>
+
+              <ul
+                className={
+                  getStyle(snapshot) === 0
+                    ? styles.items
+                    : getStyle(snapshot) === 1
+                    ? styles.items__add_right
+                    : styles.items__add_left
+                }
+              >
+                {selectedIngredients.ingredients.map((v, index) => (
+                  <BurgerConstructorIngredient
+                    ingredient={v}
+                    position={undefined}
+                    index={index}
+                    locked={false}
+                    key={v._id.concat(String(index))}
+                  />
+                ))}
+                {provided.placeholder}
+              </ul>
+
+              <div className={styles.item_ban_bottom}>
+                {selectedIngredients.bun.map((v) => (
+                  <BurgerConstructorIngredient
+                    ingredient={v}
+                    position="bottom"
+                    index={null}
+                    locked
+                    key={uuid()}
+                  />
+                ))}
+              </div>
+            </>
+          )}
+        </div>
       )}
-    </>
+    </Droppable>
   );
 };
 
