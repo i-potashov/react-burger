@@ -37,8 +37,12 @@ const BurgerConstructorIngredient: FC<IngredientProps> = ({
         />
       )}
 
-      {position === undefined && index && (
-        <Draggable draggableId={ingredient._id.concat(String(index))} index={index}>
+      {position === undefined && (
+        <Draggable
+          key={ingredient._id}
+          draggableId={ingredient._id.concat(String(index))}
+          index={index || 0}
+        >
           {(provided) => (
             <li className={styles.item} ref={provided.innerRef} {...provided.draggableProps}>
               <div {...provided.dragHandleProps}>
